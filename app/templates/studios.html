@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Студии{% endblock %}
+
+{% block content %}
+<h1>Студии</h1>
+
+<ul>
+    {% for studio in studios %}
+        <li>
+            <strong>{{ studio.name }}</strong><br>
+            {{ studio.description }}<br>
+            Цена: {{ studio.price_per_hour }} ₽ / час<br>
+            <a href="/studios/{{ studio.id }}/book">Забронировать</a>
+        </li>
+        <hr>
+    {% endfor %}
+</ul>
+{% endblock %}

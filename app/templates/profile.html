@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Мой профиль{% endblock %}
+
+{% block content %}
+<h1>Мои бронирования</h1>
+
+{% if bookings %}
+    <ul>
+        {% for booking in bookings %}
+            <li>
+                <strong>{{ booking.studio.name }}</strong><br>
+                {{ booking.date }} —
+                {{ booking.start_time }} – {{ booking.end_time }}
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У вас пока нет бронирований</p>
+{% endif %}
+{% endblock %}
