@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ studio.name }} — 808 Studios{% endblock %}
+
+{% block content %}
+<div class="bg-card border border-border rounded-xl p-8 mb-10">
+    <h1 class="text-3xl font-semibold mb-4">{{ studio.name }}</h1>
+    <p class="text-gray-400 mb-6">{{ studio.description }}</p>
+
+    <a href="/studios/{{ studio.id }}/book"
+       class="inline-block px-6 py-3 rounded-xl bg-primary hover:bg-primaryHover transition">
+        Забронировать
+    </a>
+</div>
+
+<!-- REVIEWS -->
+<section>
+    <h2 class="text-2xl font-semibold mb-4">Отзывы</h2>
+
+    {% if user %}
+    <form method="post" class="mb-6 bg-card border border-border rounded-xl p-6">
+        <textarea name="text" rows="3" required
+                  placeholder="Оставьте отзыв..."
+                  class="w-full bg-surface border border-border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:border-primary"></textarea>
+
+        <button class="px-5 py-2 rounded-lg bg-primary hover:bg-primaryHover transition">
+            Отправить
+        </button>
+    </form>
+    {% endif %}
+
+    <div class="space-y-4">
+        {% for review in reviews %}
+        <div class="bg-card border border-border rounded-xl p-5">
+            <div class="flex justify-between items-center mb-2">
+                <span class="font-medium">{{ review.user.username }}</span>
+                <span class="text-sm text-gray-400">{{ review.created_at }}</span>
+            </div>
+
+            <p class="text-gray-300 mb-3">{{ review.text }}</p>
+
+            {% if user and review.user_id == user.id %}
+            <div class="flex gap-3 text-sm">
+                <a href="/reviews/{{ review.id }}/edit"
+                   class="text-primary hover:underline">
+                    Редактировать
+                </a>
+                <a href="/reviews/{{ review.id }}/delete"
+                   class="text-red-400 hover:underline">
+                    Удалить
+                </a>
+            </div>
+            {% endif %}
+        </div>
+        {% else %}
+            <p class="text-gray-400">Отзывов пока нет</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

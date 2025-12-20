@@ -1,21 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Мой профиль{% endblock %}
+{% block title %}Профиль — 808 Studios{% endblock %}
 
 {% block content %}
-<h1>Мои бронирования</h1>
+<h2 class="text-2xl font-semibold mb-6">Профиль</h2>
 
-{% if bookings %}
-    <ul>
+<div class="grid md:grid-cols-2 gap-6">
+    <!-- INFO -->
+    <div class="bg-card border border-border rounded-xl p-6">
+        <h3 class="font-semibold mb-2">Пользователь</h3>
+        <p class="text-gray-400">{{ user.name }}</p>
+        <p class="text-gray-400">{{ user.email }}</p>
+    </div>
+
+    <!-- BOOKINGS -->
+    <div class="bg-card border border-border rounded-xl p-6">
+        <h3 class="font-semibold mb-4">Мои брони</h3>
+
         {% for booking in bookings %}
-            <li>
-                <strong>{{ booking.studio.name }}</strong><br>
-                {{ booking.date }} —
-                {{ booking.start_time }} – {{ booking.end_time }}
-            </li>
+        <div class="bg-slate-800 rounded-xl p-4 flex justify-between items-center">
+
+            <div>
+                <p class="font-semibold text-slate-100">
+                    {{ booking.studio.name }}
+                </p>
+                <p class="text-slate-400 text-sm">
+                    {{ booking.date.strftime("%d.%m.%Y") }}
+                    •
+                    {{ booking.start_time.strftime("%H:%M") }} —
+                    {{ booking.end_time.strftime("%H:%M") }}
+                </p>
+            </div>
+
+            <form method="post" action="/bookings/{{ booking.id }}/cancel">
+                <button
+                    class="px-4 py-2 rounded-lg
+                        bg-red-500/20 text-red-300
+                        hover:bg-red-500/30 transition"
+                >
+                    Отменить
+                </button>
+            </form>
+
+        </div>
+        {% else %}
+        <p class="text-slate-500">У вас пока нет бронирований</p>
         {% endfor %}
-    </ul>
-{% else %}
-    <p>У вас пока нет бронирований</p>
-{% endif %}
+
+    </div>
+</div>
 {% endblock %}

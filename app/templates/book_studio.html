@@ -1,26 +1,81 @@
 {% extends "base.html" %}
 
-{% block title %}Бронирование{% endblock %}
-
 {% block content %}
-<h1>Бронирование студии: {{ studio.name }}</h1>
+<div class="max-w-xl mx-auto bg-slate-900 rounded-2xl p-6 shadow-lg">
 
-<form method="post">
-    <label>
-        Дата:
-        <input type="date" name="date" required>
-    </label><br>
+    <h2 class="text-2xl font-bold text-slate-100 mb-6">
+        {{ studio.name }}
+    </h2>
 
-    <label>
-        Время начала:
-        <input type="time" name="start_time" required>
-    </label><br>
+    {% if error %}
+        <p class="text-red-400 mb-4">{{ error }}</p>
+    {% endif %}
 
-    <label>
-        Количество часов:
-        <input type="number" name="hours" min="1" max="12" required>
-    </label><br>
+    <form method="post" class="space-y-4">
 
-    <button type="submit">Забронировать</button>
-</form>
+        <!-- Дата -->
+        <div>
+            <label class="block text-slate-400 mb-1">Дата</label>
+            <input
+                type="date"
+                name="date"
+                value="{{ date }}"
+                required
+                class="w-full bg-slate-800 text-slate-100
+                       border border-slate-600 rounded-lg
+                       px-3 py-2
+                       focus:outline-none focus:ring-2 focus:ring-violet-500"
+            >
+        </div>
+
+        <!-- Время -->
+        <div>
+            <label class="block text-slate-400 mb-1">Время начала</label>
+            <select
+                name="start_time"
+                class="w-full bg-slate-800 text-slate-100
+                       border border-slate-600 rounded-lg
+                       px-3 py-2
+                       focus:outline-none focus:ring-2 focus:ring-violet-500"
+            >
+                {% for hour in range(studio.work_start.hour, studio.work_end.hour) %}
+                    {% set time = "%02d:00" % hour %}
+                    <option value="{{ time }}"
+                        {% if time in busy_hours %}disabled{% endif %}
+                        class="bg-slate-800"
+                    >
+                        {{ time }}
+                        {% if time in busy_hours %} — занято{% endif %}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Кол-во часов -->
+        <div>
+            <label class="block text-slate-400 mb-1">Часов</label>
+            <input
+                type="number"
+                name="hours"
+                min="1"
+                max="6"
+                required
+                class="w-full bg-slate-800 text-slate-100
+                       border border-slate-600 rounded-lg
+                       px-3 py-2
+                       focus:outline-none focus:ring-2 focus:ring-violet-500"
+            >
+        </div>
+
+        <button
+            type="submit"
+            class="w-full mt-4 py-2 rounded-xl
+                   bg-violet-600 hover:bg-violet-500
+                   text-white font-semibold transition"
+        >
+            Забронировать
+        </button>
+
+    </form>
+</div>
 {% endblock %}

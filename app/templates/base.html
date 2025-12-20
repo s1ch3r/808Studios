@@ -1,30 +1,84 @@
 <!DOCTYPE html>
+<style>
+input[type="date"],
+input[type="time"] {
+    color-scheme: dark;
+}
+</style>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}808 Studios{% endblock %}</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bg: '#0b1020',
+                        surface: '#11162a',
+                        card: '#161c35',
+                        primary: '#8b7cf6',
+                        primaryHover: '#7a6cf0',
+                        border: '#252b4a'
+                    },
+                    borderRadius: {
+                        xl: '14px'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Alpine.js -->
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body>
 
-<header>
-    <nav>
-        <a href="/">Главная</a>
-        <a href="/studios">Студии</a>
+<body class="bg-bg text-gray-200 min-h-screen">
 
-        {% if request.session.get("user_id") %}
-            <a href="/profile">Профиль</a>
-            <a href="/logout">Выйти</a>
-        {% else %}
-            <a href="/login">Войти</a>
-            <a href="/register">Регистрация</a>
-        {% endif %}
-    </nav>
-    <hr>
+<!-- HEADER -->
+<header class="bg-surface border-b border-border">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="/" class="text-xl font-semibold tracking-wide">
+            808 Studios
+        </a>
+
+        <nav class="flex items-center gap-4">
+            <a href="/studios" class="text-gray-300 hover:text-white transition">
+                Студии
+            </a>
+
+            {% if request.session.get("user_id") %}
+                <a href="/profile"
+                   class="px-4 py-2 rounded-xl bg-primary hover:bg-primaryHover transition">
+                    Профиль
+                </a>
+            {% else %}
+                <a href="/login" class="text-gray-300 hover:text-white transition">
+                    Вход
+                </a>
+                <a href="/register"
+                   class="px-4 py-2 rounded-xl bg-primary hover:bg-primaryHover transition">
+                    Регистрация
+                </a>
+            {% endif %}
+        </nav>
+    </div>
 </header>
 
-<main>
+<!-- CONTENT -->
+<main class="max-w-6xl mx-auto px-6 py-10">
     {% block content %}{% endblock %}
 </main>
+
+<!-- FOOTER -->
+<footer class="border-t border-border text-center text-sm text-gray-400 py-6">
+    © 808 Studios
+</footer>
 
 </body>
 </html>

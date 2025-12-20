@@ -1,19 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}Студии{% endblock %}
+{% block title %}Студии — 808 Studios{% endblock %}
 
 {% block content %}
-<h1>Студии</h1>
+<h2 class="text-2xl font-semibold mb-6">Доступные студии</h2>
 
-<ul>
+<div class="grid md:grid-cols-2 gap-6">
     {% for studio in studios %}
-        <li>
-            <strong>{{ studio.name }}</strong><br>
-            {{ studio.description }}<br>
-            Цена: {{ studio.price_per_hour }} ₽ / час<br>
-            <a href="/studios/{{ studio.id }}/book">Забронировать</a>
-        </li>
-        <hr>
+    <div class="bg-card border border-border rounded-xl p-6">
+        <h3 class="text-xl font-semibold mb-2">{{ studio.name }}</h3>
+        <p class="text-gray-400 mb-4">{{ studio.description }}</p>
+
+        <div class="flex justify-between items-center">
+            <span class="text-sm text-gray-300">
+                {{ studio.price_per_hour }} ₽ / час
+            </span>
+
+            <a href="/studios/{{ studio.id }}/book"
+               class="px-4 py-2 rounded-lg bg-primary hover:bg-primaryHover transition">
+                Забронировать
+            </a>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

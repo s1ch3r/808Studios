@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Редактирование отзыва{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto bg-card border border-border rounded-xl p-8">
+    <h2 class="text-2xl font-semibold mb-6">Редактировать отзыв</h2>
+
+    <form method="post">
+        <textarea name="text" rows="4" required
+                  class="w-full bg-surface border border-border rounded-lg px-4 py-2 mb-4 focus:outline-none focus:border-primary">{{ review.text }}</textarea>
+
+        <div class="flex gap-4">
+            <button class="px-6 py-2 rounded-lg bg-primary hover:bg-primaryHover transition">
+                Сохранить
+            </button>
+            <a href="/studios/{{ review.studio_id }}"
+               class="px-6 py-2 rounded-lg border border-border text-gray-300 hover:bg-surface transition">
+                Отмена
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

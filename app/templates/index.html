@@ -1,22 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Главная{% endblock %}
+{% block title %}Главная — 808 Studios{% endblock %}
 
 {% block content %}
-<h1>Добро пожаловать в 808 Studios</h1>
+<section class="text-center max-w-2xl mx-auto">
+    <h1 class="text-4xl font-bold mb-4">
+        Репетиционные студии <span class="text-primary">808</span>
+    </h1>
 
-<p>
-    Здесь вы можете посмотреть доступные студии и забронировать время.
-</p>
+    <p class="text-gray-400 mb-8">
+        Бронируй студии для репетиций, записи и джемов — просто и удобно.
+    </p>
 
-{% if not request.session.get("user_id") %}
-    <p>
-        <a href="/login">Войти</a> или
-        <a href="/register">зарегистрироваться</a>, чтобы забронировать студию.
-    </p>
-{% else %}
-    <p>
-        <a href="/studios">Перейти к студиям</a>
-    </p>
-{% endif %}
+    <a href="/studios"
+       class="inline-block px-8 py-3 rounded-xl bg-primary hover:bg-primaryHover transition text-lg">
+        Смотреть студии
+    </a>
+</section>
 {% endblock %}
